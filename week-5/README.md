@@ -5,7 +5,7 @@ There are two main building blocks that you will work with:
 1. [Jupyter notebook](00_simple_local_rag.ipynb)
 2. [Streamlit UI](pdf_rag_ui.py), which implements the same functionality in a form of an interactive UI
 
-This notebook and code were tested with Python 3.12
+This notebook and code were tested with Python 3.13.
 
 # Week's tasks
 You are expected to submit one task (if you like, by all means do and submit more!) from the list below.
@@ -38,8 +38,9 @@ pip install stqdm
 pip install tqdm
 pip install -U sentence-transformers
 pip install PyMuPDF
+pip install spacy
 ```
-# Streamlit UI setup
+# PDF RAG Streamlit UI setup
 Download models from Hugging Face:
 ```
 huggingface-cli download sentence-transformers/all-mpnet-base-v2
@@ -49,6 +50,13 @@ huggingface-cli download google/gemma-2b-it
 Download spacy's English model:
 ```
 python -m spacy download en_core_web_sm
+```
+
+# How to start it
+```
+# run it from week-5, you should also be using the venv or the Python that has all required dependencies from above
+cd week-5
+streamlit run pdf_rag_ui.py
 ```
 
 # PDF RAG UI
