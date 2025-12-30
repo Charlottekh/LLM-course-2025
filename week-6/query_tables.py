@@ -17,7 +17,7 @@ from llama_index.core import Settings
 # This will expose the api link “http://localhost:5010/api/parseDocument?renderFormat=all” for you to utilize in your code.
 
 # Initialize LLm
-llm = Ollama(model="llama3", request_timeout=60.0)
+llm = Ollama(model="llama3", request_timeout=300.0, streaming=True)
 
 llmsherpa_api_url = "http://localhost:5010/api/parseDocument?renderFormat=all"
 pdf_url = "https://s206.q4cdn.com/479360582/files/doc_financials/2024/q1/2024q1-alphabet-earnings-release-pdf.pdf"
@@ -27,14 +27,12 @@ pdf_reader = LayoutPDFReader(llmsherpa_api_url)
 doc = pdf_reader.read_pdf(pdf_url)
 
 # Get data from the Section by Title
-selected_section = None
+context = ""
 for section in doc.sections():
-    if 'Q1 2024 Financial Highlights' in section.title:
-        selected_section = section
-        break
+    context += section.to_html(include_children=True, recurse=True)
+
 
 # Convert the output in HTML format
-context = selected_section.to_html(include_children=True, recurse=True)
 question = "What was Google's operating margin for 2024"
 resp = llm.complete(
     f"read this table and answer question: {question}:\n{context}")
